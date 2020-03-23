@@ -6,8 +6,8 @@ from dbutils import create_connection, create_table, select_from_table
 from setup_countries import COUNTRY_TABLE, COUNTRYCODE_TABLE
 
 CONFIRMED="COVID-19\\csse_covid_19_data\\csse_covid_19_time_series\\time_series_19-covid-Confirmed.csv"
-DEATH="COVID-19\\csse_covid_19_data\\csse_covid_19_time_series\\time_series_19-covid-Death.csv"
-RECOVERD="COVID-19\\csse_covid_19_data\\csse_covid_19_time_series\\time_series_19-covid-Recovered.csv"
+DEATH=    "COVID-19\\csse_covid_19_data\\csse_covid_19_time_series\\time_series_19-covid-Deaths.csv"
+RECOVERD= "COVID-19\\csse_covid_19_data\\csse_covid_19_time_series\\time_series_19-covid-Recovered.csv"
 
 REPORT_FOLDER="COVID-19\\csse_covid_19_data\\csse_covid_19_daily_reports"
 
@@ -18,13 +18,13 @@ CONFIRMED_TOKEN = "Confirmed"
 DEATHS_TOKEN = "Deaths"
 RECOVERED_TOKEN = "Recovered"
 
-def load_data():
+def load_data(file):
     # Read data from file 'filename.csv' 
     # (in the same directory that your python process is based)
     # Control delimiters, rows, column names with read_csv (see later) 
     
     #return pd.read_csv( os.path.join(REPORT_FOLDER, "03-21-2020.csv") ) 
-    return pd.read_csv( CONFIRMED ) 
+    return pd.read_csv( file ) 
 
 def SaveCountriesCSV(countries):
     import csv
@@ -32,14 +32,14 @@ def SaveCountriesCSV(countries):
         for key in countries.keys():
             f.write("%s;%s\n"%(key, countries[key]))
 
-def GetReports(conn):
+def GetReports(conn, filename):
 
     def GetCode(coutry_name):
         cur = conn.cursor()
         cur.execute("SELECT isocode FROM " + COUNTRYCODE_TABLE + " WHERE name=?", (coutry_name,))
         return cur.fetchone()["isocode"]
 
-    data = load_data()
+    data = load_data(filename)
     colnumber = len(data.columns)
     colstart = 4
 
@@ -53,6 +53,15 @@ def GetReports(conn):
             countries[code] = np.add(countries[code], series)
 
     return countries
+
+def GetDeaths(conn):
+    return GetReports(conn, DEATH)
+    
+def GetConfirmed(conn):
+    return GetReports(conn, CONFIRMED)
+
+def GetRecovered(conn):
+    return GetReports(conn, RECOVERD)
 
     # # print(countries["CA"])
     # print(countries)
