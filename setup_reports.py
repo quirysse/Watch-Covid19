@@ -37,7 +37,7 @@ def GetReports(conn):
     def GetCode(coutry_name):
         cur = conn.cursor()
         cur.execute("SELECT isocode FROM " + COUNTRYCODE_TABLE + " WHERE name=?", (coutry_name,))
-        return cur.fetchall()[0][0]
+        return cur.fetchone()["isocode"]
 
     data = load_data()
     colnumber = len(data.columns)

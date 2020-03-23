@@ -101,6 +101,11 @@ def FillCountries(conn):
             AddCountry(conn, c)
 
 
+def GetCountry(conn, isocode):
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM " + COUNTRY_TABLE + " WHERE isocode=?", (isocode,))
+        return cur.fetchone()
+
 def InitCountryData(conn): 
     CreateCountryTable(conn)
     CreateCountryCodeTable(conn)

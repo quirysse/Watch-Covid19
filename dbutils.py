@@ -1,11 +1,18 @@
 import sqlite3
 from sqlite3 import Error
 
+def dict_factory(cursor, row):
+    d = {}
+    for idx, col in enumerate(cursor.description):
+        d[col[0]] = row[idx]
+    return d
+
 def create_connection(db_file):
     """ create a database connection to a SQLite database """
     conn = None
     try:
         conn = sqlite3.connect(db_file)
+        conn.row_factory = dict_factory
         return conn
     except Error as e:
         print(e)
