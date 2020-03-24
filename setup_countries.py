@@ -100,7 +100,6 @@ def FillCountries(conn):
                     country['population'] )
             AddCountry(conn, c)
 
-
 def GetCountry(conn, isocode):
         cur = conn.cursor()
         cur.execute("SELECT * FROM " + COUNTRY_TABLE + " WHERE isocode=?", (isocode,))

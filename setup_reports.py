@@ -62,7 +62,4 @@ def GetConfirmed(conn):
 
 def GetRecovered(conn):
     return GetReports(conn, RECOVERD)
-
-    # # print(countries["CA"])
-    # print(countries)
-    # print(countries["CA"].shape)
+    
