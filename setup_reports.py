@@ -5,9 +5,9 @@ import numpy as np
 from dbutils import create_connection, create_table, select_from_table
 from setup_countries import COUNTRY_TABLE, COUNTRYCODE_TABLE
 
-CONFIRMED="COVID-19\\csse_covid_19_data\\csse_covid_19_time_series\\time_series_19-covid-Confirmed.csv"
-DEATH=    "COVID-19\\csse_covid_19_data\\csse_covid_19_time_series\\time_series_19-covid-Deaths.csv"
-RECOVERD= "COVID-19\\csse_covid_19_data\\csse_covid_19_time_series\\time_series_19-covid-Recovered.csv"
+CONFIRMED="COVID-19\\csse_covid_19_data\\csse_covid_19_time_series\\time_series_covid19_confirmed_global.csv"
+DEATH=    "COVID-19\\csse_covid_19_data\\csse_covid_19_time_series\\time_series_covid19_deaths_global.csv"
+RECOVERD= "COVID-19\\csse_covid_19_data\\csse_covid_19_time_series\\time_series_covid19_recovered_global.csv"
 
 REPORT_FOLDER="COVID-19\\csse_covid_19_data\\csse_covid_19_daily_reports"
 
@@ -32,6 +32,10 @@ def SaveCountriesCSV(countries):
         for key in countries.keys():
             f.write("%s;%s\n"%(key, countries[key]))
 
+
+# def SortCountries(countries):
+
+
 def GetReports(conn, filename):
 
     def GetCode(coutry_name):
@@ -45,12 +49,20 @@ def GetReports(conn, filename):
 
     countries = {}
     for index, row in data.iterrows():
-        code =  GetCode(row[COUNTRY_TOKEN])
-        series = np.array( row[colstart:] )
+        try:
+            code =  GetCode(row[COUNTRY_TOKEN])
+        except:
+            print("Missing country: " + str(row[COUNTRY_TOKEN]))
+            continue
+
+        series = np.array( row[colstart:], dtype=np.float )
         if not code in countries:
             countries[code] = series
         else:
             countries[code] = np.add(countries[code], series)
+
+        if row[STATE_TOKEN] == "Quebec" : 
+            countries["QC"] = series
 
     return countries
 
