@@ -13,6 +13,24 @@ def DaysToMultiplyBy(x, alpha):
     y = BaseRate(x)
     return np.log(alpha) / np.log(y)
 
+
+def GetLegendCummul():
+    return dict(
+        title = '''Nombre de cas officiels cummulés''',
+        xaxis_title = '''Nombre de jours''',
+        yaxis_title = '''Nombre de cas'''
+    )
+
+def GetFont():
+    return dict(
+            family="Courier New, monospace",
+            size=18,
+            color="#7f7f7f"
+        )
+
+def GetLegend():
+    return GetLegendCummul()
+
 def plot(report, threshold=50, outputfile=None):
     
     filter_windowsize = 7
@@ -39,15 +57,12 @@ def plot(report, threshold=50, outputfile=None):
             name=country_code
         ))
 
+    leg = GetLegend()
     fig.update_layout(
-        title="Nombre de cas officiels cummulés",
-        xaxis_title="Nombre de jours",
-        yaxis_title="Nombre de cas",
-        font=dict(
-            family="Courier New, monospace",
-            size=18,
-            color="#7f7f7f"
-        )
+        title=leg['title'],
+        xaxis_title=leg['xaxis_title'],
+        yaxis_title=leg['yaxis_title'],
+        font=GetFont()
     )
 
     if outputfile is not None:    
