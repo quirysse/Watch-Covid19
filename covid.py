@@ -13,12 +13,14 @@ from plot import plot
 help="""This program parses Covid-19 data fetched from Johns Hopkins CSSE and creates some HTML plots.
 
 Usage: covid.py [-huo FOLDER] [-n <count>]
+       covid.py [-huo FOLDER] [-c "countrylist"]
 
 Options.
 -h --help    show this
 -u --update  update database from online source
 -o --output FOLDER    specify output folder instead of opening web browser
 -n count --number count number of countries to display [default: 10]
+-c "list" --countries "list" space separared list of ISO 3166-1 alpha-2 country code
 
 This depends 2019 Novel Coronavirus COVID-19 (2019-nCoV) Data Repository by Johns Hopkins CSSE available at https://github.com/CSSEGISandData/COVID-19.git
 """
@@ -47,6 +49,11 @@ def GetReportFromList(report, isocodelist):
     
     return ret
 
+def GetCountriesFromArgumets(plot_report, parselist):
+    countries = parselist.upper().split()
+    print(countries)
+    return GetReportFromList(plot_report, countries)
+
 if __name__ == "__main__":
 
     arguments = docopt(help)
@@ -67,15 +74,16 @@ if __name__ == "__main__":
 
     plot_report = report_conf
 
-    countries = ( ("CA", "r"), ("US", "g"), ("IT", "b"), ("FR", "k"), ("DE", "y"), ("CN", "c"), ("ES", "m") )
-    countries = ( ("CA", "r"), ("US", "g"), ("IT", "b"), ("FR", "k"), ("DE", "y"), ("ES", "m") )
     #countries = ( "US", "IT", "FR", "DE", "ES", "CN" )
     countries = ( "QC", "FR", "CA", "IT" )
 
-    customlist = GetReportFromList(plot_report, countries)
-    toplist = Head(plot_report, country_number)
+
+    if arguments["--countries"] is not None:
+        countries = GetCountriesFromArgumets(plot_report, arguments["--countries"])
+    else:
+        countries = Head(plot_report, country_number)
     
-    plotlist = toplist
+    plotlist = countries
 
     plotlist[ "QC" ] = plot_report["QC"]
     plot(plotlist, threshold=100, outputfile=arguments["--output"])
