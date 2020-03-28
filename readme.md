@@ -9,6 +9,3 @@ Options.
 -c "list" --countries "list" space separared list of ISO 3166-1 alpha-2 country code
 
 This depends 2019 Novel Coronavirus COVID-19 (2019-nCoV) Data Repository by Johns Hopkins CSSE available at https://github.com/CSSEGISandData/COVID-19.git
-
-
-This depends 2019 Novel Coronavirus COVID-19 (2019-nCoV) Data Repository by Johns Hopkins CSSE available at https://github.com/CSSEGISandData/COVID-19.git
