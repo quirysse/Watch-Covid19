@@ -5,11 +5,11 @@ import numpy as np
 from dbutils import create_connection, create_table, select_from_table
 from setup_countries import COUNTRY_TABLE, COUNTRYCODE_TABLE
 
-CONFIRMED="COVID-19\\csse_covid_19_data\\csse_covid_19_time_series\\time_series_covid19_confirmed_global.csv"
-DEATH=    "COVID-19\\csse_covid_19_data\\csse_covid_19_time_series\\time_series_covid19_deaths_global.csv"
-RECOVERD= "COVID-19\\csse_covid_19_data\\csse_covid_19_time_series\\time_series_covid19_recovered_global.csv"
+CONFIRMED="COVID-19.data\\csse_covid_19_data\\csse_covid_19_time_series\\time_series_covid19_confirmed_global.csv"
+DEATH=    "COVID-19.data\\csse_covid_19_data\\csse_covid_19_time_series\\time_series_covid19_deaths_global.csv"
+RECOVERD= "COVID-19.data\\csse_covid_19_data\\csse_covid_19_time_series\\time_series_covid19_recovered_global.csv"
 
-REPORT_FOLDER="COVID-19\\csse_covid_19_data\\csse_covid_19_daily_reports"
+REPORT_FOLDER="COVID-19.data\\csse_covid_19_data\\csse_covid_19_daily_reports"
 
 STATE_TOKEN = "Province/State"
 COUNTRY_TOKEN = "Country/Region"
