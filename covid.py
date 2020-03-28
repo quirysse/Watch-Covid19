@@ -1,7 +1,6 @@
  #Load the Pandas libraries with alias 'pd' 
-from dbutils import create_connection, create_table
-from setup_countries import InitCountryData, GetCountry
-from setup_reports import  Reports
+
+from CountryDatabase import CountryDatabase
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -26,33 +25,17 @@ This depends 2019 Novel Coronavirus COVID-19 (2019-nCoV) Data Repository by John
 """
 from docopt import docopt
 
-DBFILE = "database.db"
 
-def setup_database(conn, force_update=False):
-    InitCountryData(conn, force_update)
-    if force_update :
-        conn.commit()  
 
-def Head(countries, n=10) : 
-    ret = {}
 
-    for key, value in sorted(countries.items(), key=lambda kv : kv[1][-1], reverse=True):
-        ret[key] = value
-        n = n-1
-        if n == 0:
-            return ret
 
-def GetReportFromList(report, isocodelist):
-    ret = {}
-    for code in isocodelist:
-        ret[code] = report[code]
-    
-    return ret
 
-def GetCountriesFromArgumets(plot_report, parselist):
+
+
+def GetCountriesFromArguments(plot_report, parselist):
     countries = parselist.upper().split()
-    print(countries)
     return GetReportFromList(plot_report, countries)
+
 
 if __name__ == "__main__":
 
@@ -61,31 +44,26 @@ if __name__ == "__main__":
     if arguments["--number"] is not None :
         country_number = int(arguments["--number"])
 
-    print(arguments)
+    # print(arguments)
 
-    conn = create_connection(DBFILE)
-    setup_database(conn, arguments['--update'])
     
-    rep = Reports(conn)
+    db = CountryDatabase()
     
-    report_conf = rep.Confirmed
-    report_death = rep.Deaths
-    report_recov = rep.Recovered
+    report_conf = db.report.Confirmed
+    report_death = db.report.Deaths
+    report_recov = db.report.Recovered
 
     plot_report = report_conf
 
-    #countries = ( "US", "IT", "FR", "DE", "ES", "CN" )
-    countries = ( "QC", "FR", "CA", "IT" )
-
 
     if arguments["--countries"] is not None:
-        countries = GetCountriesFromArgumets(plot_report, arguments["--countries"])
+        countries = db.GetFromList( arguments["--countries"].upper().split() )
     else:
-        countries = Head(plot_report, country_number)
+        countries = db.Head()
     
     plotlist = countries
 
-    plotlist[ "QC" ] = plot_report["QC"]
+    plotlist[ "QC" ] = db.GetCountry("QC")
     plot(plotlist, threshold=100, outputfile=arguments["--output"])
 
 
