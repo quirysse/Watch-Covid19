@@ -12,12 +12,13 @@ from plot import plot
 
 help="""This program parses Covid-19 data fetched from Johns Hopkins CSSE and creates some HTML plots.
 
-Usage: covid.py [-huo FOLDER]
+Usage: covid.py [-huo FOLDER] [-n <count>]
 
 Options.
 -h --help    show this
 -u --update  update database from online source
 -o --output FOLDER    specify output folder instead of opening web browser
+-n count --number count number of countries to display [default: 10]
 
 This depends 2019 Novel Coronavirus COVID-19 (2019-nCoV) Data Repository by Johns Hopkins CSSE available at https://github.com/CSSEGISandData/COVID-19.git
 """
@@ -49,6 +50,10 @@ def GetReportFromList(report, isocodelist):
 if __name__ == "__main__":
 
     arguments = docopt(help)
+    country_number = 10
+    if arguments["--number"] is not None :
+        country_number = int(arguments["--number"])
+
     print(arguments)
 
     conn = create_connection(DBFILE)
@@ -68,7 +73,7 @@ if __name__ == "__main__":
     countries = ( "QC", "FR", "CA", "IT" )
 
     customlist = GetReportFromList(plot_report, countries)
-    toplist = Head(plot_report, 10)
+    toplist = Head(plot_report, country_number)
     
     plotlist = toplist
 
