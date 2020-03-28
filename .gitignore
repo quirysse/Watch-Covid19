@@ -1,5 +1,6 @@
 database.db
 .vscode/
+COVID-19.data-git/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
