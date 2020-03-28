@@ -1,15 +1,21 @@
 import os
+from os import path
 import pandas as pd 
 import numpy as np
+import urllib.request
+from git import Repo
 
 from dbutils import create_connection, create_table, select_from_table
 from setup_countries import COUNTRY_TABLE, COUNTRYCODE_TABLE
 
-CONFIRMED="COVID-19.data\\csse_covid_19_data\\csse_covid_19_time_series\\time_series_covid19_confirmed_global.csv"
-DEATH=    "COVID-19.data\\csse_covid_19_data\\csse_covid_19_time_series\\time_series_covid19_deaths_global.csv"
-RECOVERD= "COVID-19.data\\csse_covid_19_data\\csse_covid_19_time_series\\time_series_covid19_recovered_global.csv"
+SOURCEURL="https://github.com/CSSEGISandData/COVID-19.git"
 
-REPORT_FOLDER="COVID-19.data\\csse_covid_19_data\\csse_covid_19_daily_reports"
+BASEDIR="COVID-19.data-git"
+CONFIRMED=path.join(BASEDIR, "csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv")
+DEATH=    path.join(BASEDIR, "csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv")
+RECOVERD= path.join(BASEDIR, "csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_recovered_global.csv")
+
+REPORT_FOLDER=path.join(BASEDIR, "csse_covid_19_data/csse_covid_19_daily_reports")
 
 STATE_TOKEN = "Province/State"
 COUNTRY_TOKEN = "Country/Region"
@@ -19,11 +25,6 @@ DEATHS_TOKEN = "Deaths"
 RECOVERED_TOKEN = "Recovered"
 
 def load_data(file):
-    # Read data from file 'filename.csv' 
-    # (in the same directory that your python process is based)
-    # Control delimiters, rows, column names with read_csv (see later) 
-    
-    #return pd.read_csv( os.path.join(REPORT_FOLDER, "03-21-2020.csv") ) 
     return pd.read_csv( file ) 
 
 def SaveCountriesCSV(countries):
@@ -31,9 +32,6 @@ def SaveCountriesCSV(countries):
     with open('count.csv', 'w') as f:
         for key in countries.keys():
             f.write("%s;%s\n"%(key, countries[key]))
-
-
-# def SortCountries(countries):
 
 
 def GetReports(conn, filename):
@@ -61,6 +59,7 @@ def GetReports(conn, filename):
         else:
             countries[code] = np.add(countries[code], series)
 
+        #Special case to get some territories/pronvinces separately
         if row[STATE_TOKEN] == "Quebec" : 
             countries["QC"] = series
 
@@ -75,3 +74,22 @@ def GetConfirmed(conn):
 def GetRecovered(conn):
     return GetReports(conn, RECOVERD)
     
+def GetDataFromInternet():
+    if not path.exists(BASEDIR) : 
+        Repo.clone_from(SOURCEURL, BASEDIR)
+    else :
+        Repo(BASEDIR).remotes.origin.pull()
+
+
+def SetupData(forceupdate=False):
+    if forceupdate or not path.exists(DEATH) or not path.exists(CONFIRMED) or not path.exists(RECOVERD) :
+        GetDataFromInternet()
+
+class Reports:
+
+    def __init__(self, conn, forceupdate=False):
+        SetupData(forceupdate)
+
+        self.Deaths = GetDeaths(conn)
+        self.Confirmed = GetConfirmed(conn)
+        self.Recovered = GetRecovered(conn)

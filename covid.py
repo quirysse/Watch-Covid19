@@ -1,73 +1,34 @@
  #Load the Pandas libraries with alias 'pd' 
 from dbutils import create_connection, create_table
 from setup_countries import InitCountryData, GetCountry
-from setup_reports import  GetDeaths, GetConfirmed, GetRecovered
+from setup_reports import  Reports
 import numpy as np
 import matplotlib.pyplot as plt
-import plotly.express as px
-import plotly.graph_objects as go
-import math
-from scipy.signal import savgol_filter
 
+import math
+
+from plot import plot
+
+
+help="""This program parses Covid-19 data fetched from Johns Hopkins CSSE and creates some HTML plots.
+
+Usage: covid.py [-huo FOLDER]
+
+Options.
+-h --help    show this
+-u --update  update database from online source
+-o --output FOLDER    specify output folder instead of opening web browser
+
+This depends 2019 Novel Coronavirus COVID-19 (2019-nCoV) Data Repository by Johns Hopkins CSSE available at https://github.com/CSSEGISandData/COVID-19.git
+"""
+from docopt import docopt
 
 DBFILE = "database.db"
 
-def setup_database(conn):
-    InitCountryData(conn)
-    conn.commit()
-
-def plot(report, threshold=50):
-    
-    filter_windowsize = 50000000000000
-    fig = go.Figure()
-    for country_code,  time_series in report.items():
-
-        time_series[time_series < threshold ] = 0
-        time_series = np.trim_zeros(time_series, 'f') #/ country["population"] * 1000000
-        
-        #print(country["name"], len(time_series), time_series )
-        #p = plt.plot( time_series, c[1], label=country_code )
-
-        signal = time_series#savgol_filter(time_series, 5, 3)
-
-        if len(time_series) > filter_windowsize :
-            signal = savgol_filter(time_series, filter_windowsize, 3)
-#        signal = savgol_filter( DaysToMultiplyBy(time_series, 2.), 9, 3)
-
-        #signal = Derive(signal)
-
-        fig.add_trace(go.Scatter(
-            y=signal,
-            mode='lines',
-            name=country_code
-        ))
-
-    fig.update_layout(
-        title="Nombre de cas officiels cummulés",
-        xaxis_title="Nombre de jours",
-        yaxis_title="Nombre de cas",
-        font=dict(
-            family="Courier New, monospace",
-            size=18,
-            color="#7f7f7f"
-        )
-    )
-    
-    fig.write_html("W:\\www\\igloox\\Covid19\\CummulConfirmeCovid19.html", auto_open=False) 
-    #fig.write_html("W:\\www\\igloox\\Covid19\\VitesseMortCovid19.html", auto_open=False) 
-    #fig.show()
-    # plt.legend(loc='upper left', borderaxespad=0.)
-    # plt.show()
-
-def BaseRate(x):
-    return np.asarray( x[1:]/x[:len(x)-1] )
-
-def Derive(x):
-    return np.asarray( x[1:]-x[:len(x)-1] )
-
-def DaysToMultiplyBy(x, alpha):
-    y = BaseRate(x)
-    return np.log(alpha) / np.log(y)
+def setup_database(conn, force_update=False):
+    InitCountryData(conn, force_update)
+    if force_update :
+        conn.commit()  
 
 def Head(countries, n=10) : 
     ret = {}
@@ -86,12 +47,18 @@ def GetReportFromList(report, isocodelist):
     return ret
 
 if __name__ == "__main__":
+
+    arguments = docopt(help)
+    print(arguments)
+
     conn = create_connection(DBFILE)
-    setup_database(conn)
+    setup_database(conn, arguments['--update'])
     
-    report_conf = GetConfirmed(conn)
-    report_death = GetDeaths(conn)
-    report_recov = GetRecovered(conn)
+    rep = Reports(conn)
+    
+    report_conf = rep.Confirmed
+    report_death = rep.Deaths
+    report_recov = rep.Recovered
 
     plot_report = report_conf
 
@@ -106,12 +73,7 @@ if __name__ == "__main__":
     plotlist = toplist
 
     plotlist[ "QC" ] = plot_report["QC"]
-    plot(plotlist, threshold=100)
-
-    #plot(countries, report_conf, threshold=50)
-    # df = px.data.gapminder().query("country=='Canada'")
-    # fig = px.line(df, x="year", y="lifeExp", title='Life expectancy in Canada')
-    # fig.show()
+    plot(plotlist, threshold=100, outputfile=arguments["--output"])
 
 
 

@@ -105,11 +105,19 @@ def GetCountry(conn, isocode):
         cur.execute("SELECT * FROM " + COUNTRY_TABLE + " WHERE isocode=?", (isocode,))
         return cur.fetchone()
 
-def InitCountryData(conn): 
-    CreateCountryTable(conn)
-    CreateCountryCodeTable(conn)
+def TableExists(conn, tablename):
+    cur = conn.cursor()
+    cur.execute(''' SELECT count(name) FROM sqlite_master WHERE type='table' AND name=? ''', (tablename,))
+    return cur.fetchone()['count(name)']==1
 
-    FillCountries(conn)
-    FillCountryCode(conn)
+
+def InitCountryData(conn, force_update=False): 
+
+    if force_update or not TableExists(conn, COUNTRY_TABLE) or not TableExists(conn, COUNTRYCODE_TABLE) :
+        CreateCountryTable(conn)
+        CreateCountryCodeTable(conn)
+
+        FillCountries(conn)
+        FillCountryCode(conn)
 
     
