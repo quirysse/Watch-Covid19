@@ -18,12 +18,12 @@ def setup_database(conn):
 
 def plot(report, threshold=50):
     
-    filter_windowsize = 5000000000000
+    filter_windowsize = 50000000000000
     fig = go.Figure()
     for country_code,  time_series in report.items():
 
         time_series[time_series < threshold ] = 0
-        time_series = np.trim_zeros(time_series, 'f') # / country["population"] * 1000000
+        time_series = np.trim_zeros(time_series, 'f') #/ country["population"] * 1000000
         
         #print(country["name"], len(time_series), time_series )
         #p = plt.plot( time_series, c[1], label=country_code )
@@ -34,7 +34,7 @@ def plot(report, threshold=50):
             signal = savgol_filter(time_series, filter_windowsize, 3)
 #        signal = savgol_filter( DaysToMultiplyBy(time_series, 2.), 9, 3)
 
-#        signal = Derive(signal)
+        #signal = Derive(signal)
 
         fig.add_trace(go.Scatter(
             y=signal,
@@ -42,7 +42,20 @@ def plot(report, threshold=50):
             name=country_code
         ))
 
-    fig.show()
+    fig.update_layout(
+        title="Nombre de cas officiels cummulés",
+        xaxis_title="Nombre de jours",
+        yaxis_title="Nombre de cas",
+        font=dict(
+            family="Courier New, monospace",
+            size=18,
+            color="#7f7f7f"
+        )
+    )
+    
+    fig.write_html("W:\\www\\igloox\\Covid19\\CummulConfirmeCovid19.html", auto_open=False) 
+    #fig.write_html("W:\\www\\igloox\\Covid19\\VitesseMortCovid19.html", auto_open=False) 
+    #fig.show()
     # plt.legend(loc='upper left', borderaxespad=0.)
     # plt.show()
 
@@ -88,7 +101,7 @@ if __name__ == "__main__":
     countries = ( "QC", "FR", "CA", "IT" )
 
     customlist = GetReportFromList(plot_report, countries)
-    toplist = Head(plot_report, 5)
+    toplist = Head(plot_report, 10)
     
     plotlist = toplist
 
