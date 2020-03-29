@@ -23,7 +23,7 @@ Options.
 -c "list" --countries "list" space separared list of ISO 3166-1 alpha-2 country code
 -p --population  plot the numbers as a ratio of the country population (by million inhabitants) [default: False]
 
-This depends 2019 Novel Coronavirus COVID-19 (2019-nCoV) Data Repository by Johns Hopkins CSSE available at https://github.com/CSSEGISandData/COVID-19.git
+This depends 2019 Novel Coronavirus COVID-19 (2019-nCoV) [Data Repository by Johns Hopkins CSSE available](https://github.com/CSSEGISandData/COVID-19.git) and the country facts from [REST COUNTRIES](https://restcountries.eu).
 """
 from docopt import docopt
 
@@ -62,7 +62,12 @@ if __name__ == "__main__":
 
     plotlist[ "QC" ] = db.GetCountry("QC")
     plotlist[ "CA" ] = db.GetCountry("CA")
-    plot(plotlist, threshold=begin, derivecount=derive_order, bypopulation=arguments["--population"], outputfile=arguments["--output"])
+    plot(plotlist, 
+        threshold=begin, 
+        derivecount=derive_order, 
+        bypopulation=arguments["--population"], 
+        outputfile=arguments["--output"]
+        )
 
 
 

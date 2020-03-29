@@ -20,15 +20,19 @@ The tool fetches both country facts and Covid-19 online data and build an easy t
 
 ## Usage
 
-Usage: *covid.py* [-huo FOLDER] [-n <count>]  
-       *covid.py* [-huo FOLDER] [-c "countrylist"]  
+Usage: *covid.py* [-hpuo FOLDER] [-s | -a] [-n <count>] [-b <start>]  
+       *covid.py* [-hpuo FOLDER] [-s | -a] [-c "countrylist"] [-b <start>]  
 
 Options.  
 -h --help    show this  
 -u --update  update database from online source  
 -o --output FOLDER    specify output folder instead of opening web browser  
--n count --number count number of countries to display [default: 10]  
+-n count --number count number of countries to display [default: 10] 
+-b start --begin start starting point (first day the number of case/death reach that level) [default: 100]  
+-s --speed   plot the progression rate (speed) instead of the cummulative case [default: False]  
+-a --acceleration   plot the variation of the progression rate (acceleration) instead of the cummulative case [default: False]  
 -c "list" --countries "list" space separared list of  [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) country code  
+-p --population  plot the numbers as a ratio of the country population (by million inhabitants) [default: False]  
 
 ### References
 This depends 2019 Novel Coronavirus COVID-19 (2019-nCoV) [Data Repository by Johns Hopkins CSSE available](https://github.com/CSSEGISandData/COVID-19.git) and the country facts from [REST COUNTRIES](https://restcountries.eu).
