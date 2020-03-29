@@ -13,7 +13,7 @@ The tool fetches both country facts and Covid-19 online data and build an easy t
 * [2019 Novel Coronavirus COVID-19 (2019-nCoV) Data Repository by Johns Hopkins CSSE](https://github.com/CSSEGISandData/COVID-19)
 
 ## Usage
-Usage: **covid.py** [-hpu] [-d | -r] [-s | -a] [-o *FILE*] [-n *count*] [-i "*includelist*"] [-b *start*] [-x "excludelist"] [-w *smoothing_window_size*] [-c *cipping_days*]
+Usage: **covid.py** [-hpu] [-d | -r] [-s | -a] [-o *FILE*] [-n *count*] [-i "*includelist*"] [-b *start*] [-x "excludelist"] [-w *smoothing_window_size*] [-c *clipping_days*]
 
 | Options                      | Explanations                                                                                                                                                           |
 |------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------|

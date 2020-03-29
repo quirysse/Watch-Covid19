@@ -9,7 +9,7 @@ from plot import plot
 
 help="""This program fetches and parses Covid-19 data from Johns Hopkins CSSE and creates custom interactive HTML plots.  
 
-Usage: covid.py [-hpuo FILE] [-d | -r] [-s | -a] [-n <count>] [-i "includelist"] [-b <start>] [-x "excludelist"] [-w <smoothing_window_size>] [-c <cipping_days>]
+Usage: covid.py [-hpuo FILE] [-d | -r] [-s | -a] [-n <count>] [-i "includelist"] [-b <start>] [-x "excludelist"] [-w <smoothing_window_size>] [-c <clipping_days>]
 
 Options.  
 -h --help                     Show help  
