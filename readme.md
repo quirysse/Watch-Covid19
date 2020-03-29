@@ -18,7 +18,7 @@ Usage: **covid.py** [-hpu] [-d | -r] [-s | -a] [-o *FILE*] [-n *count*] [-i "*in
 | Options                      | Explanations                                                                                                                                                           |
 |------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | -h --help                    | Show help                                                                                                                                                              |
-| -u --update                  | Update database from online source                                                                                                                                     |
+| -u --update                  | Update database from online [default: False]source                                                                                                                                     |
 | -o --output FILE             | Specify output file name instead of opening web browser                                                                                                                |
 | -n count --number count      | Number of top countries to display. Set to 0 for displaying only a custom list (along with the -c option). Set to -1 to display all countries. [default: 10]           |
 | -b start --begin start       | Starting point (first day the number of case/death reach that level) [default: 100]                                                                                    |
