@@ -43,6 +43,10 @@ Options.
 
 `# Display in a web browser the number of cases by million inhabitants for the top 10 countries in term of cummulated declared cases. Start the curves when the number of cases gets bigger than 500.`  
 `>python covid.py -pb 500`  
+
+`# Fetch latest data and display in a web browser the top 10 countries in term of cummulated number of declared cases.`  
+`>python covid.py -un 5`  
+
   
 ### References
 This depends 2019 Novel Coronavirus COVID-19 (2019-nCoV) [Data Repository by Johns Hopkins CSSE available](https://github.com/CSSEGISandData/COVID-19.git) and the country facts from [REST COUNTRIES](https://restcountries.eu).
