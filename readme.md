@@ -24,15 +24,15 @@ Usage: *covid.py* [-hpuo FOLDER] [-s | -a] [-n <count>] [-b <start>]
        *covid.py* [-hpuo FOLDER] [-s | -a] [-c "countrylist"] [-b <start>]  
 
 Options.  
--h --help    show this  
--u --update  update database from online source  
--o --output FILE    specify output file instead of opening web browser  
--n count --number top number of countries to display [default: 10]  
--b start --begin start starting point (first day the number of case/death reach that level) [default: 100]  
--s --speed   plot the progression rate (speed) instead of the cummulative case [default: False]  
--a --acceleration   plot the variation of the progression rate (acceleration) instead of the cummulative case [default: False]  
--c "list" --countries "list" space separared list of  [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) country code  
--p --population  plot the numbers as a ratio of the country population (by million inhabitants) [default: False]  
+-h --help                     Show this  
+-u --update                   Update database from online source  
+-o --output FILE              Specify output file instead of opening web browser  
+-n count --number             Top number of countries to display [default: 10]  
+-b start --begin start        Starting point (first day the number of case/death reach that level) [default: 100]  
+-s --speed                    Plot the progression rate (speed) instead of the cummulative case [default: False]  
+-a --acceleration             Plot the variation of the progression rate (acceleration) instead of the cummulative case [default: False]  
+-c "list" --countries "list"  Space separared list of  [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) country code  
+-p --population               Plot the numbers as a ratio of the country population (by million inhabitants) [default: False]  
 
 ## Examples
 `# Display in a web browser the five top countries in term of cummulated number of declared cases`  
