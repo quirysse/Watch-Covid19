@@ -13,7 +13,7 @@ The tool fetches both country facts and Covid-19 online data and build an easy t
 * [2019 Novel Coronavirus COVID-19 (2019-nCoV) Data Repository by Johns Hopkins CSSE](https://github.com/CSSEGISandData/COVID-19)
 
 ## Usage
-Usage: **covid.py** [-hpu] [-d | -r] [-s | -a] [-o *FILE*] [-n *count*] [-c "*countrylist*"] [-b *start*] [-x "excludelist"] [-w *smoothing_window_size*] [-k *cipping_days*]
+Usage: **covid.py** [-hpu] [-d | -r] [-s | -a] [-o *FILE*] [-n *count*] [-i "*includelist*"] [-b *start*] [-x "excludelist"] [-w *smoothing_window_size*] [-c *cipping_days*]
 
 | Options                      | Explanations                                                                                                                                                           |
 |------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -25,7 +25,7 @@ Usage: **covid.py** [-hpu] [-d | -r] [-s | -a] [-o *FILE*] [-n *count*] [-c "*co
 | -c days --clip days          | Clip the plot to this number of days. Zero (0) means an unbounded graph.  [default: 0]                                                                                      |
 | -s --speed                   | Plot the progression rate (speed) instead of the cummulative case [default: False]                                                                                     |
 | -a --acceleration            | Plot the variation of the progression rate (acceleration) instead of the cummulative case [default: False]                                                             |
-| -c "list" --countries "list" | Space separared list of [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)                                                                         |
+| -i "list" --include "list" | Space separared list of [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)                                                                         |
 | -x "list" --exclude "list"   | Space separared list of [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)                                                                         |
 | -w size --window size        | Smooting window size. Curves are soothed using an order 3 polynomial fit on a moving window of size 2n+1 the given number. Set to 0 to prevent smoothing and display raw data. [Default: 3] |
 | -p --population              | Plot the numbers as a ratio of the country population (by million inhabitants) [default: False]                                                                        |
