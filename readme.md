@@ -11,7 +11,20 @@ Options.
 -o --output FOLDER    specify output folder instead of opening web browser  
 -n count --number count number of countries to display [default: 10]  
 -c "list" --countries "list" space separared list of ISO 3166-1 alpha-2 country code  
-  
-This depends 2019 Novel Coronavirus COVID-19 (2019-nCoV) Data Repository by Johns Hopkins CSSE available at https://github.com/CSSEGISandData/COVID-19.git
 
-The data is automatically fetched if necessary
+This depends 2019 Novel Coronavirus COVID-19 (2019-nCoV) [Data Repository by Johns Hopkins CSSE available](https://github.com/CSSEGISandData/COVID-19.git) and the country facts from [REST COUNTRIES](https://restcountries.eu/).
+
+## Main goals of this piece of software:
+* Make the link between different country databases: Covid-19 and country facts
+* Perform some data analysis on the raw data: curve smoothing, speed and acceleration monitoring, exponential curve fitting, etc.
+* Provide graphical summary that is easy to read and easy to share
+
+## Two main sources of data are tied together:
+* [REST COUNTRIES](https://restcountries.eu/)
+* [2019 Novel Coronavirus COVID-19 (2019-nCoV) Data Repository by Johns Hopkins CSSE](https://github.com/CSSEGISandData/COVID-19)
+
+## Example of what is possible
+`canada = database['CA']`  
+`numpy_array = canada['timeseries']`  
+`population = canada['info']['population']`  
+`death_by_million= numpy_array[-1] / population * 1e6`  
