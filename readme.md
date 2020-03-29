@@ -45,7 +45,7 @@ Options.
 `>python covid.py -pb 500`  
 
 `# Fetch latest data and display in a web browser the top 10 countries in term of cummulated number of declared cases.`  
-`>python covid.py -un 5`  
+`>python covid.py -u`  
 
   
 ### References
