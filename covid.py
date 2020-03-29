@@ -12,7 +12,7 @@ help="""This program parses Covid-19 data fetched from Johns Hopkins CSSE and cr
 Usage: covid.py [-hpuo FILE] [-s | -a] [-n <count>] [-c "countrylist"] [-b <start>] [-x "excludelist"] [-w <smoothing_window_size>]  
 
 Options.  
--h --help                     Show this  
+-h --help                     Show help  
 -u --update                   Update database from online source  
 -o --output FILE              Specify output file name instead of opening web browser  
 -n count --number count       Number of top countries to display. Set to 0 for displaying only a custom list (along with the -c option). Set to -1 to display all countries. [default: 10]  
