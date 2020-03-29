@@ -15,19 +15,35 @@ def DaysToMultiplyBy(x, alpha):
     return np.log(alpha) / np.log(y)
 
 
-def GetLegendCummul():
-    return dict(
-        title = '''Nombre de cas officiels cummulés''',
-        xaxis_title = '''Nombre de jours''',
-        yaxis_title = '''Nombre de cas'''
-    )
+def GetLegendCummul(speed=False):
+    if speed:
+        return dict(
+            title = '''Nouveaux cas officiels par jour''',
+            xaxis_title = '''Nombre de jours''',
+            yaxis_title = '''Nombre de cas par jour'''
+        )
+        
+    else:
+        return dict(
+            title = '''Nombre de cas officiels cummulés''',
+            xaxis_title = '''Nombre de jours''',
+            yaxis_title = '''Nombre de cas'''
+        )
 
-def GetLegendDeath():
-    return dict(
-        title = '''Nombre de morts cummulés''',
-        xaxis_title = '''Nombre de jours''',
-        yaxis_title = '''Nombre de morts'''
-    )
+def GetLegendDeath(speed=False):
+    if speed:
+        return dict(
+            title = '''Nouveaux morts par jour''',
+            xaxis_title = '''Nombre de jours''',
+            yaxis_title = '''Nombre de morts par jour'''
+        )
+        
+    else:
+        return dict(
+            title = '''Nombre de morts cummulés''',
+            xaxis_title = '''Nombre de jours''',
+            yaxis_title = '''Nombre de morts'''
+        )
 
 def GetFont():
     return dict(
@@ -37,7 +53,7 @@ def GetFont():
         )
 
 def GetLegend():
-    return GetLegendCummul()
+    return GetLegendCummul(True)
     #return GetLegendDeath()
 
 def plot(report, threshold=50, outputfile=None):
@@ -48,6 +64,8 @@ def plot(report, threshold=50, outputfile=None):
         isocode = key
         time_series = val["timeseries"]
         country_info = val["info"]
+
+        country_name = country_info["name"] if country_info is not None else ""
         time_series[time_series < threshold ] = 0
         time_series = np.trim_zeros(time_series, 'f') #/ country_info["population"] * 1000000
         
@@ -56,12 +74,16 @@ def plot(report, threshold=50, outputfile=None):
         if len(time_series) > filter_windowsize :
             signal = savgol_filter(time_series, filter_windowsize, 3)
 
-        #signal = Derive(signal)
+        signal = Derive(signal)
 
         fig.add_trace(go.Scatter(
             y=signal,
             mode='lines',
-            name=isocode
+            name=isocode,
+            hovertemplate =
+            '<b>Cas</b>: %{y:.0f}'+
+            '<br><b>Jour</b>: %{x}<br>'+
+            '<b>' + country_name + '</b>'
         ))
 
     leg = GetLegend()

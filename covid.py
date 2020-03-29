@@ -64,6 +64,7 @@ if __name__ == "__main__":
     plotlist = countries
 
     plotlist[ "QC" ] = db.GetCountry("QC")
+    plotlist[ "CA" ] = db.GetCountry("CA")
     plot(plotlist, threshold=100, outputfile=arguments["--output"])
 
 
