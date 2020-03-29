@@ -27,7 +27,7 @@ Options.
 -h --help    show this  
 -u --update  update database from online source  
 -o --output FOLDER    specify output folder instead of opening web browser  
--n count --number count number of countries to display [default: 10] 
+-n count --number count number of countries to display [default: 10]  
 -b start --begin start starting point (first day the number of case/death reach that level) [default: 100]  
 -s --speed   plot the progression rate (speed) instead of the cummulative case [default: False]  
 -a --acceleration   plot the variation of the progression rate (acceleration) instead of the cummulative case [default: False]  
