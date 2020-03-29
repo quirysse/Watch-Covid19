@@ -16,7 +16,7 @@ The tool fetches both country facts and Covid-19 online data and build an easy t
 `canada = database['CA']`  
 `numpy_array = canada['timeseries']`  
 `population = canada['info']['population']`  
-`death_by_million= numpy_array[-1] / population * 1e6`  
+`death_by_million = numpy_array[-1] / population * 1e6`  
 
 ## Usage
 
@@ -28,7 +28,7 @@ Options.
 -u --update  update database from online source  
 -o --output FOLDER    specify output folder instead of opening web browser  
 -n count --number count number of countries to display [default: 10]  
--c "list" --countries "list" space separared list of ISO 3166-1 alpha-2 country code  
+-c "list" --countries "list" space separared list of  [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) country code  
 
 ### References
-This depends 2019 Novel Coronavirus COVID-19 (2019-nCoV) [Data Repository by Johns Hopkins CSSE available](https://github.com/CSSEGISandData/COVID-19.git) and the country facts from [REST COUNTRIES](https://restcountries.eu/).
+This depends 2019 Novel Coronavirus COVID-19 (2019-nCoV) [Data Repository by Johns Hopkins CSSE available](https://github.com/CSSEGISandData/COVID-19.git) and the country facts from [REST COUNTRIES](https://restcountries.eu).
