@@ -26,13 +26,23 @@ Usage: *covid.py* [-hpuo FOLDER] [-s | -a] [-n <count>] [-b <start>]
 Options.  
 -h --help    show this  
 -u --update  update database from online source  
--o --output FOLDER    specify output folder instead of opening web browser  
--n count --number count number of countries to display [default: 10]  
+-o --output FILE    specify output file instead of opening web browser  
+-n count --number top number of countries to display [default: 10]  
 -b start --begin start starting point (first day the number of case/death reach that level) [default: 100]  
 -s --speed   plot the progression rate (speed) instead of the cummulative case [default: False]  
 -a --acceleration   plot the variation of the progression rate (acceleration) instead of the cummulative case [default: False]  
 -c "list" --countries "list" space separared list of  [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) country code  
 -p --population  plot the numbers as a ratio of the country population (by million inhabitants) [default: False]  
 
+## Examples
+'# Display in a web browser the five top countries in term of cummulated number of declared cases'  
+'>python covid.py -n 5'  
+
+'# Save in a file speed of declared cases for Spain, France and Italy'  
+'>python covid.py -o c:\temp\plot.html -sc "ES FR IT"'  
+
+'# Display in a web browser the number of cases by million inhabitants for the top 10 countries in term of cummulated declared cases. Start the curves when the number of cases gets bigger than 500.  
+'>python covid.py -pb 500  
+  
 ### References
 This depends 2019 Novel Coronavirus COVID-19 (2019-nCoV) [Data Repository by Johns Hopkins CSSE available](https://github.com/CSSEGISandData/COVID-19.git) and the country facts from [REST COUNTRIES](https://restcountries.eu).
