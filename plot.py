@@ -33,7 +33,7 @@ def GetLegendCummul(speed=False):
 def GetLegendDeath(speed=False):
     if speed:
         return dict(
-            title = '''Nouveaux morts <BR> ar jour''',
+            title = '''Nouveaux morts <BR> par jour''',
             xaxis_title = '''Nombre de jours''',
             yaxis_title = '''Nombre de morts par jour'''
         )
@@ -56,7 +56,7 @@ def GetLegend(rateInsteadOfSum):
     return GetLegendCummul(rateInsteadOfSum)
     #return GetLegendDeath()
 
-def plot(report, threshold=50, derivecount = 0, bypopulation=False, outputfile=None, windowsize=5):
+def plot(report, threshold=50, derivecount = 0, bypopulation=False, outputfile=None, windowsize=5, rightbound=0):
     
     filter_windowsize = windowsize
     filter_polynomial_order = 3 if filter_windowsize > 3 else 1
@@ -75,10 +75,15 @@ def plot(report, threshold=50, derivecount = 0, bypopulation=False, outputfile=N
             country_popul_str = "N/A"  
             
         time_series[time_series < threshold ] = 0
-
-
-        time_series = np.trim_zeros(time_series, 'f')
         
+        time_series[time_series < threshold ] = 0
+        time_series = np.trim_zeros(time_series, 'f')
+
+        if rightbound > 0 and len(time_series) > rightbound:
+            time_series[rightbound:] = 0
+        
+        time_series = np.trim_zeros(time_series, 'b')
+
         if bypopulation :
             if country_info is None:
                 continue #Case of state of province without known population in dataabse
@@ -99,10 +104,10 @@ def plot(report, threshold=50, derivecount = 0, bypopulation=False, outputfile=N
             mode='lines',
             name=isocode,
             hovertemplate =
-            case_hover_string +
-            '<br><b>Jour</b>: %{x}<br>'+
-            '<b>' + country_name + '</b>'
-            '<b> Population: ' + country_popul_str + '</b>'
+            '<b>' + country_name + '</b><BR>' +
+            '<b>Population: ' + country_popul_str + '</b><BR>' +
+            case_hover_string + '<BR>' +
+            '<b>Jour</b>: %{x}<br>'
         ))
 
     leg = GetLegend(derivecount > 0)

@@ -17,6 +17,15 @@ class CountryDatabase :
         self.conn = conn = create_connection(DBFILE)
         setup_database(conn, force_update)
         self.report = Reports(conn)
+        self.SetDataTorConfirmed()
+
+    def SetDataToDeath(self):
+        self.current = self.report.Deaths
+
+    def SetDataTorRecovered(self):
+        self.current = self.report.Recovered
+
+    def SetDataTorConfirmed(self):
         self.current = self.report.Confirmed
 
     def GetFromList(self, isocodelist):
