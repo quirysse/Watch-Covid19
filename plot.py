@@ -56,10 +56,10 @@ def GetLegend(rateInsteadOfSum):
     return GetLegendCummul(rateInsteadOfSum)
     #return GetLegendDeath()
 
-def plot(report, threshold=50, derivecount = 0, bypopulation=False, outputfile=None):
+def plot(report, threshold=50, derivecount = 0, bypopulation=False, outputfile=None, windowsize=5):
     
-    filter_windowsize = 5
-    filter_polynomial_order = 3
+    filter_windowsize = windowsize
+    filter_polynomial_order = 3 if filter_windowsize > 3 else 1
 
     fig = go.Figure()
     for key, val in report.items():
@@ -87,7 +87,7 @@ def plot(report, threshold=50, derivecount = 0, bypopulation=False, outputfile=N
 
         signal = time_series
 
-        if len(time_series) > filter_windowsize :
+        if len(time_series) > filter_windowsize and filter_windowsize > 1:
             signal = savgol_filter(time_series, filter_windowsize, filter_polynomial_order)
 
         for i in range(derivecount):

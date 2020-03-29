@@ -22,21 +22,30 @@ class CountryDatabase :
     def GetFromList(self, isocodelist):
         return self.__getReportFromList(isocodelist)
 
-    def Head(self, n=10):
-        return self.__head(self.current, n)
+    def Head(self, n=10, exclude=()):
+        return self.__head(self.current, n=n, exclude=exclude)
 
     def GetCountry(self, isocode):
         info = GetCountry(self.conn, isocode)
         timeseries = self.current[isocode]
         return {"info" : info, "timeseries" : timeseries}
 
-    def __head(self, report, n) : 
+    def __head(self, report, n, exclude) : 
         ret = {}
+        if n == 0:          # Return empty list
+            return ret
+        elif n < 0:         # Return all elements
+            n = len(report)
+
         for key, value in sorted(report.items(), key=lambda kv : kv[1][-1], reverse=True):
-            ret[key] = self.GetCountry(key)
-            n = n-1
-            if n == 0:
-                return ret
+            if not key in exclude:
+                ret[key] = self.GetCountry(key)
+                n = n-1
+                if n == 0:
+                    break
+
+        return ret
+        
 
     def __getReportFromList(self, isocodelist):
         ret = {}
