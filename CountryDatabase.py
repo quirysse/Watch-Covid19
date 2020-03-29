@@ -16,7 +16,7 @@ class CountryDatabase :
     def __init__(self, force_update=False):
         self.conn = conn = create_connection(DBFILE)
         setup_database(conn, force_update)
-        self.report = Reports(conn)
+        self.report = Reports(conn, forceupdate=force_update)
         self.SetDataTorConfirmed()
 
     def SetDataToDeath(self):

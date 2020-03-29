@@ -13,7 +13,7 @@ Usage: covid.py [-hpuo FILE] [-d | -r] [-s | -a] [-n <count>] [-i "includelist"]
 
 Options.  
 -h --help                     Show help  
--u --update                   Update database from online source  
+-u --update                   Update database from online source [default: False]
 -o --output FILE              Specify output file name instead of opening web browser  
 -n count --number count       Number of top countries to display. Set to 0 for displaying only a custom list (along with the -c option). Set to -1 to display all countries. [default: 10]  
 -b start --begin start        Starting point (first day the number of case/death reach that level) [default: 100]  
@@ -38,11 +38,11 @@ if __name__ == "__main__":
     if arguments["--number"] is not None :
         country_number = int(arguments["--number"])
 
-    #print(arguments)
+    print(arguments)
 
     begin = int(arguments["--begin"]) if arguments["--begin"] is not None else 100
     
-    db = CountryDatabase()
+    db = CountryDatabase(force_update=arguments["--update"])
     if arguments["--deaths"] :
         db.SetDataToDeath()
     elif arguments["--recovered"] :
