@@ -38,7 +38,7 @@ if __name__ == "__main__":
     if arguments["--number"] is not None :
         country_number = int(arguments["--number"])
 
-    print(arguments)
+    # print(arguments)
 
     begin = int(arguments["--begin"]) if arguments["--begin"] is not None else 100
     
@@ -66,7 +66,8 @@ if __name__ == "__main__":
         bypopulation=arguments["--population"], 
         outputfile=arguments["--output"],
         windowsize= 2 * int(arguments["--window"]) + 1,
-        rightbound=int(arguments["--clip"])
+        rightbound=int(arguments["--clip"]),
+        lastupdate=db.GetLastUpdateTime()
         )
 
 

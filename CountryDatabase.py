@@ -39,6 +39,9 @@ class CountryDatabase :
         timeseries = self.current[isocode]
         return {"info" : info, "timeseries" : timeseries}
 
+    def GetLastUpdateTime(self):
+        return self.report.GetLastUpdateTime()
+        
     def __head(self, report, n, exclude) : 
         ret = {}
         if n == 0:          # Return empty list

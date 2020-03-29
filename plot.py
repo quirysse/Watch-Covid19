@@ -47,16 +47,16 @@ def GetLegendDeath(speed=False):
 
 def GetFont():
     return dict(
-            family="Courier New, monospace",
+            family="Balto, sans-serif",
             size=14,
-            color="#7f7f7f"
+            color="MidnightBlue"
         )
 
 def GetLegend(rateInsteadOfSum):
     return GetLegendCummul(rateInsteadOfSum)
     #return GetLegendDeath()
 
-def plot(report, threshold=50, derivecount = 0, bypopulation=False, outputfile=None, windowsize=5, rightbound=0, text=None):
+def plot(report, threshold=50, derivecount = 0, bypopulation=False, outputfile=None, windowsize=5, rightbound=0, text=None, lastupdate=None):
     
     filter_windowsize = windowsize
     filter_polynomial_order = 3 if filter_windowsize > 3 else 1
@@ -111,6 +111,9 @@ def plot(report, threshold=50, derivecount = 0, bypopulation=False, outputfile=N
         ))
 
     leg = GetLegend(derivecount > 0) if text is None else text
+
+    if lastupdate is not None:
+        leg['title'] = leg['title'] + ': ' + str(lastupdate)
     fig.update_layout(
         title=leg['title'],
         xaxis_title=leg['xaxis_title'],

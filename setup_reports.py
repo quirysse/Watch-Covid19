@@ -93,3 +93,7 @@ class Reports:
         self.Deaths = GetDeaths(conn)
         self.Confirmed = GetConfirmed(conn)
         self.Recovered = GetRecovered(conn)
+
+    def GetLastUpdateTime(self):
+        import os.path, time
+        return time.ctime( os.path.getmtime(CONFIRMED) )
