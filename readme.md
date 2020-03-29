@@ -35,14 +35,14 @@ Options.
 -p --population  plot the numbers as a ratio of the country population (by million inhabitants) [default: False]  
 
 ## Examples
-'# Display in a web browser the five top countries in term of cummulated number of declared cases'  
-'>python covid.py -n 5'  
+`# Display in a web browser the five top countries in term of cummulated number of declared cases`  
+`>python covid.py -n 5`  
 
-'# Save in a file speed of declared cases for Spain, France and Italy'  
-'>python covid.py -o c:\temp\plot.html -sc "ES FR IT"'  
+`# Save in a file speed of declared cases for Spain, France and Italy`  
+`>python covid.py -o c:\temp\plot.html -sc "ES FR IT"`  
 
-'# Display in a web browser the number of cases by million inhabitants for the top 10 countries in term of cummulated declared cases. Start the curves when the number of cases gets bigger than 500.  
-'>python covid.py -pb 500  
+`# Display in a web browser the number of cases by million inhabitants for the top 10 countries in term of cummulated declared cases. Start the curves when the number of cases gets bigger than 500.`  
+`>python covid.py -pb 500`  
   
 ### References
 This depends 2019 Novel Coronavirus COVID-19 (2019-nCoV) [Data Repository by Johns Hopkins CSSE available](https://github.com/CSSEGISandData/COVID-19.git) and the country facts from [REST COUNTRIES](https://restcountries.eu).
