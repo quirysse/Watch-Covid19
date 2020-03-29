@@ -27,13 +27,6 @@ This depends 2019 Novel Coronavirus COVID-19 (2019-nCoV) [Data Repository by Joh
 """
 from docopt import docopt
 
-
-
-def GetCountriesFromArguments(plot_report, parselist):
-    countries = parselist.upper().split()
-    return GetReportFromList(plot_report, countries)
-
-
 if __name__ == "__main__":
 
     arguments = docopt(help)
@@ -56,7 +49,7 @@ if __name__ == "__main__":
     if arguments["--countries"] is not None:
         countries = db.GetFromList( arguments["--countries"].upper().split() )
     else:
-        countries = db.Head()
+        countries = db.Head(country_number)
     
     plotlist = countries
 
