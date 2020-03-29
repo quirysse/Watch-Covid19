@@ -35,7 +35,10 @@ Usage: **covid.py** [-hpu] [-d | -r] [-s | -a] [-o *FILE*] [-n *count*] [-i "*in
 This depends 2019 Novel Coronavirus COVID-19 (2019-nCoV) [Data Repository by Johns Hopkins CSSE available](https://github.com/CSSEGISandData/COVID-19.git) and the country facts from [REST COUNTRIES](https://restcountries.eu).
 
 ## Examples
-`# Display in a web browser the five top countries in term of cummulated number of declared cases`  
+`# Display in a web browser the top 10 countries in term of cummulated number of declared cases`  
+`>python covid.py`  
+
+`# Display in a web browser the top 5 countries in term of cummulated number of declared cases`  
 `>python covid.py -n 5`  
 
 `# Save in a file speed of declared cases for Spain, France and Italy`  
