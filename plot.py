@@ -52,11 +52,13 @@ def GetFont():
             color="MidnightBlue"
         )
 
-def GetLegend(rateInsteadOfSum):
+def GetLegend(rateInsteadOfSum, report_type="cummul"):
+    if report_type == "deaths":
+        return GetLegendDeath(rateInsteadOfSum)
+    
     return GetLegendCummul(rateInsteadOfSum)
-    #return GetLegendDeath()
 
-def plot(report, threshold=50, derivecount = 0, bypopulation=False, outputfile=None, windowsize=5, rightbound=0, text=None, lastupdate=None):
+def plot(report, threshold=50, derivecount = 0, bypopulation=False, outputfile=None, windowsize=5, rightbound=0, text=None, lastupdate=None, report_type="cummul"):
     
     filter_windowsize = windowsize
     filter_polynomial_order = 3 if filter_windowsize > 3 else 1
@@ -110,7 +112,7 @@ def plot(report, threshold=50, derivecount = 0, bypopulation=False, outputfile=N
             '<b>Jour</b>: %{x}<br>'
         ))
 
-    leg = GetLegend(derivecount > 0) if text is None else text
+    leg = GetLegend(derivecount > 0, report_type) if text is None else text
 
     if lastupdate is not None:
         leg['title'] = leg['title'] + ': ' + str(lastupdate)

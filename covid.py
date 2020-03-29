@@ -9,7 +9,7 @@ from plot import plot
 
 help="""This program fetches and parses Covid-19 data from Johns Hopkins CSSE and creates custom interactive HTML plots.  
 
-Usage: covid.py [-hpuo FILE] [-d | -r] [-s | -a] [-n <count>] [-i "includelist"] [-b <start>] [-x "excludelist"] [-w <smoothing_window_size>] [-c <clipping_days>]
+Usage: covid.py [-hpuo FILE] [-d | -r] [-s | -a] [-n <count>] [-i "includelist"] [-b <start>] [-x "excludelist"] [-w <smoothing_window_size>] [-c <clbipping_days>]
 
 Options.  
 -h --help                     Show help  
@@ -42,11 +42,15 @@ if __name__ == "__main__":
 
     begin = int(arguments["--begin"]) if arguments["--begin"] is not None else 100
     
+    report_type = "cummul"
     db = CountryDatabase(force_update=arguments["--update"])
     if arguments["--deaths"] :
         db.SetDataToDeath()
+        report_type = "deaths"
     elif arguments["--recovered"] :
         db.SetDataTorRecovered()
+        report_type = "recovered"
+
     
     derive_order = 0
     if arguments["--speed"] :
@@ -67,7 +71,8 @@ if __name__ == "__main__":
         outputfile=arguments["--output"],
         windowsize= 2 * int(arguments["--window"]) + 1,
         rightbound=int(arguments["--clip"]),
-        lastupdate=db.GetLastUpdateTime()
+        lastupdate=db.GetLastUpdateTime(),
+        report_type=report_type
         )
 
 
