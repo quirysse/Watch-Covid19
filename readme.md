@@ -44,6 +44,7 @@ This depends 2019 Novel Coronavirus COVID-19 (2019-nCoV) [Data Repository by Joh
 
 `# Save in a file speed of declared cases for Spain, France and Italy only`  
 `>python covid.py -o c:\temp\plot.html -n0 -si "ES FR IT"`  
+![alt text][n0si_ES_FR_IT]
 
 `# Display in a web browser the number of cases by million inhabitants for the top 10 countries in term of cummulated declared cases. Start the curves when the number of cases gets bigger than 500.`  
 `>python covid.py -pb 500`  
@@ -53,20 +54,24 @@ This depends 2019 Novel Coronavirus COVID-19 (2019-nCoV) [Data Repository by Joh
 `>python covid.py -u`  
 
 `# Compare only Canada and U.S.A. in term of declared cases relative to their respective population (per 1M inhabitants)`  
-`>python covid.py -i "CA US" -pn0`  
+`>python covid.py -i "CA US" -pn0`
+![alt text][CA_US_pn0]  
 
 `# Compare Iceland plus the top 5 countries excluding China and U.S.A. Display the new cases per day relative to country population (per 1M inhabitants)`  
 `>python covid.py -i "IS" -spn5 -x "CN US"`  
+![alt text][IS_spn5x_CB_US]  
 
 `# Compare top 3 countries raw cummulative data without any curve smoothing`  
 `>python covid.py -w 0 -n3`  
+![alt text][w0n3] 
 
 `# Compare the death rate raw data from top ten countries`  
 `>python covid.py -sdw0`  
+![alt text][sdw0] 
 
 `# Display in a web browser the number of cases for the top 10 countries, starting when the cases reach 1000 and stoping after 30 days.`  
 `>python covid.py -b 1000 -c30`  
-
+![alt text][b1000c30] 
 
 ## Example of what is easily available inside the code
 `canada = database['CA']`  
@@ -74,10 +79,15 @@ This depends 2019 Novel Coronavirus COVID-19 (2019-nCoV) [Data Repository by Joh
 `population = canada['info']['population']`  
 `death_by_million = numpy_array[-1] / population * 1e6`  
 
+
 ### References
 This depends 2019 Novel Coronavirus COVID-19 (2019-nCoV) [Data Repository by Johns Hopkins CSSE available](https://github.com/CSSEGISandData/COVID-19.git) and the country facts from [REST COUNTRIES](https://restcountries.eu).
 
-
-[pb500]: http://www.quirysse.com/wp-content/uploads/2020/03/Watch-Covid19_pb500.png ">python covid.py -pb 500"
 [n5]: http://www.quirysse.com/wp-content/uploads/2020/03/Watch-Covid19_n5.png ">python covid.py -n 5"
-
+[n0si_ES_FR_IT]: http://www.quirysse.com/wp-content/uploads/2020/03/Watch-Covid19_n0si_ES_FR_IT.png ">python covid.py -n0 -si \"ES FR IT\""
+[pb500]: http://www.quirysse.com/wp-content/uploads/2020/03/Watch-Covid19_pb500.png ">python covid.py -pb 500"
+[CA_US_pn0]: http://www.quirysse.com/wp-content/uploads/2020/03/Watch-Covid19_CA_US_pn0.png ">python covid.py -i \"CA US\" -pn0"
+[IS_spn5x_CB_US]: http://www.quirysse.com/wp-content/uploads/2020/03/Watch-Covid19_IS_spn5x_CB_US.png ">python covid.py -i \"IS\" -spn5 -x \"CN US\""
+[w0n3]: http://www.quirysse.com/wp-content/uploads/2020/03/Watch-Covid19_w0n3.png ">python covid.py -w 0 -n3"
+[sdw0]: http://www.quirysse.com/wp-content/uploads/2020/03/Watch-Covid19_sdw0.png ">python covid.py -sdw0"
+[b1000c30]: http://www.quirysse.com/wp-content/uploads/2020/03/Watch-Covid19_b1000c30.png ">python covid.py -b 1000 -c30"
