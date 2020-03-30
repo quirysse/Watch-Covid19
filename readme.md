@@ -40,21 +40,23 @@ This depends 2019 Novel Coronavirus COVID-19 (2019-nCoV) [Data Repository by Joh
 
 `# Display in a web browser the top 5 countries in term of cummulated number of declared cases`  
 `>python covid.py -n 5`  
+![alt text][n5]
 
-`# Save in a file speed of declared cases for Spain, France and Italy`  
-`>python covid.py -o c:\temp\plot.html -sc "ES FR IT"`  
+`# Save in a file speed of declared cases for Spain, France and Italy only`  
+`>python covid.py -o c:\temp\plot.html -n0 -si "ES FR IT"`  
 
 `# Display in a web browser the number of cases by million inhabitants for the top 10 countries in term of cummulated declared cases. Start the curves when the number of cases gets bigger than 500.`  
 `>python covid.py -pb 500`  
+![alt text][pb500]
 
 `# Fetch latest data and display in a web browser the top 10 countries in term of cummulated number of declared cases.`  
 `>python covid.py -u`  
 
 `# Compare only Canada and U.S.A. in term of declared cases relative to their respective population (per 1M inhabitants)`  
-`>python covid.py -c "CA US" -pn0`  
+`>python covid.py -i "CA US" -pn0`  
 
 `# Compare Iceland plus the top 5 countries excluding China and U.S.A. Display the new cases per day relative to country population (per 1M inhabitants)`  
-`>python covid.py -c "IS" -spn5 -x "CN US"`  
+`>python covid.py -i "IS" -spn5 -x "CN US"`  
 
 `# Compare top 3 countries raw cummulative data without any curve smoothing`  
 `>python covid.py -w 0 -n3`  
@@ -74,3 +76,8 @@ This depends 2019 Novel Coronavirus COVID-19 (2019-nCoV) [Data Repository by Joh
 
 ### References
 This depends 2019 Novel Coronavirus COVID-19 (2019-nCoV) [Data Repository by Johns Hopkins CSSE available](https://github.com/CSSEGISandData/COVID-19.git) and the country facts from [REST COUNTRIES](https://restcountries.eu).
+
+
+[pb500]: http://www.quirysse.com/wp-content/uploads/2020/03/Watch-Covid19_pb500.png ">python covid.py -pb 500"
+[n5]: http://www.quirysse.com/wp-content/uploads/2020/03/Watch-Covid19_n5.png ">python covid.py -n 5"
+
