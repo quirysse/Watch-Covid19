@@ -18,14 +18,14 @@ def DaysToMultiplyBy(x, alpha):
 def GetLegendCummul(speed=False):
     if speed:
         return dict(
-            title = '''Nouveaux cas officiels <BR>par jour''',
+            title = '''Nouveaux cas officiels par jour''',
             xaxis_title = '''Nombre de jours''',
             yaxis_title = '''Nombre de cas par jour'''
         )
         
     else:
         return dict(
-            title = '''Nombre de cas officiels <BR>cummulés''',
+            title = '''Nombre de cas officiels cummulés''',
             xaxis_title = '''Nombre de jours''',
             yaxis_title = '''Nombre de cas'''
         )
@@ -33,14 +33,14 @@ def GetLegendCummul(speed=False):
 def GetLegendDeath(speed=False):
     if speed:
         return dict(
-            title = '''Nouveaux morts <BR> par jour''',
+            title = '''Nouveaux morts par jour''',
             xaxis_title = '''Nombre de jours''',
             yaxis_title = '''Nombre de morts par jour'''
         )
         
     else:
         return dict(
-            title = '''Nombre de morts <BR>cummulés''',
+            title = '''Nombre de morts cummulés''',
             xaxis_title = '''Nombre de jours''',
             yaxis_title = '''Nombre de morts'''
         )
