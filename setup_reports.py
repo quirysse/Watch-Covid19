@@ -75,9 +75,16 @@ def GetRecovered(conn):
     return GetReports(conn, RECOVERD)
     
 def GetDataFromInternet():
+    from git import RemoteProgress
+    class MyProgressPrinter(RemoteProgress):
+        def update(self, op_code, cur_count, max_count=None, message='---'):
+            print(message)
+
     if not path.exists(BASEDIR) : 
+        print('Cloning', SOURCEURL)
         Repo.clone_from(SOURCEURL, BASEDIR)
     else :
+        print('Updating', SOURCEURL)
         Repo(BASEDIR).remotes.origin.pull()
 
 
