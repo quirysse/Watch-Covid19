@@ -14,35 +14,37 @@ def DaysToMultiplyBy(x, alpha):
     y = BaseRate(x)
     return np.log(alpha) / np.log(y)
 
+def GetByPopSuffix(bypopulation=False):
+    return ' pour 1M habitants' if bypopulation is True else ''
 
-def GetLegendCummul(speed=False):
+def GetLegendCummul(speed=False, bypopulation=False):
     if speed:
         return dict(
-            title = '''Nouveaux cas officiels par jour''',
+            title = '''Nouveaux cas officiels par jour''' + GetByPopSuffix(bypopulation),
             xaxis_title = '''Nombre de jours''',
-            yaxis_title = '''Nombre de cas par jour'''
+            yaxis_title = '''Nombre de cas par jour''' + GetByPopSuffix(bypopulation)
         )
         
     else:
         return dict(
-            title = '''Nombre de cas officiels cummulés''',
+            title = '''Nombre de cas officiels cummulés''' + GetByPopSuffix(bypopulation),
             xaxis_title = '''Nombre de jours''',
-            yaxis_title = '''Nombre de cas'''
+            yaxis_title = '''Nombre de cas''' + GetByPopSuffix(bypopulation)
         )
 
-def GetLegendDeath(speed=False):
+def GetLegendDeath(speed=False, bypopulation=False):
     if speed:
         return dict(
-            title = '''Nouveaux morts par jour''',
+            title = '''Nouveaux morts par jour''' + GetByPopSuffix(bypopulation),
             xaxis_title = '''Nombre de jours''',
-            yaxis_title = '''Nombre de morts par jour'''
+            yaxis_title = '''Nombre de morts par jour''' + GetByPopSuffix(bypopulation)
         )
         
     else:
         return dict(
-            title = '''Nombre de morts cummulés''',
+            title = '''Nombre de morts cummulés''' + GetByPopSuffix(bypopulation),
             xaxis_title = '''Nombre de jours''',
-            yaxis_title = '''Nombre de morts'''
+            yaxis_title = '''Nombre de morts''' + GetByPopSuffix(bypopulation)
         )
 
 def GetFont():
@@ -52,11 +54,11 @@ def GetFont():
             color="MidnightBlue"
         )
 
-def GetLegend(rateInsteadOfSum, report_type="cummul"):
+def GetLegend(rateInsteadOfSum, report_type="cummul", bypopulation=False):
     if report_type == "deaths":
-        return GetLegendDeath(rateInsteadOfSum)
+        return GetLegendDeath(rateInsteadOfSum, bypopulation)
     
-    return GetLegendCummul(rateInsteadOfSum)
+    return GetLegendCummul(rateInsteadOfSum, bypopulation)
 
 def plot(report, threshold=50, derivecount = 0, bypopulation=False, outputfile=None, windowsize=5, rightbound=0, text=None, lastupdate=None, report_type="cummul"):
     
@@ -112,10 +114,10 @@ def plot(report, threshold=50, derivecount = 0, bypopulation=False, outputfile=N
             '<b>Jour</b>: %{x}<br>'
         ))
 
-    leg = GetLegend(derivecount > 0, report_type) if text is None else text
+    leg = GetLegend(derivecount > 0, report_type=report_type, bypopulation=bypopulation) if text is None else text
 
     if lastupdate is not None:
-        leg['title'] = leg['title'] + ': ' + str(lastupdate)
+        leg['title'] = leg['title'] + '<BR>' + str(lastupdate)
     fig.update_layout(
         title=leg['title'],
         xaxis_title=leg['xaxis_title'],
@@ -123,7 +125,9 @@ def plot(report, threshold=50, derivecount = 0, bypopulation=False, outputfile=N
         font=GetFont()
     )
 
-    if outputfile is not None:    
-        fig.write_html(outputfile, auto_open=False)
+    if outputfile is not None:
+        import os    
+        base = os.path.splitext(outputfile)[0]
+        fig.write_html(base + '.html', auto_open=False)
     else :
         fig.show()  
