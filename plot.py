@@ -17,33 +17,33 @@ def DaysToMultiplyBy(x, alpha):
 def GetByPopSuffix(bypopulation=False):
     return ' pour 1M habitants' if bypopulation is True else ''
 
-def GetLegendCummul(speed=False, bypopulation=False):
+def GetLegendCummul(speed=False, bypopulation=False, start=100):
     if speed:
         return dict(
             title = '''Nouveaux cas officiels par jour''' + GetByPopSuffix(bypopulation),
-            xaxis_title = '''Nombre de jours''',
+            xaxis_title = '''Nombre de jours depuis ''' + str(start) + ' cas',
             yaxis_title = '''Nombre de cas par jour''' + GetByPopSuffix(bypopulation)
         )
         
     else:
         return dict(
             title = '''Nombre de cas officiels cummulés''' + GetByPopSuffix(bypopulation),
-            xaxis_title = '''Nombre de jours''',
+            xaxis_title = '''Nombre de jours depuis ''' + str(start) + ' cas',
             yaxis_title = '''Nombre de cas''' + GetByPopSuffix(bypopulation)
         )
 
-def GetLegendDeath(speed=False, bypopulation=False):
+def GetLegendDeath(speed=False, bypopulation=False, start=100):
     if speed:
         return dict(
             title = '''Nouveaux morts par jour''' + GetByPopSuffix(bypopulation),
-            xaxis_title = '''Nombre de jours''',
+            xaxis_title = '''Nombre de jours depuis ''' + str(start) + ' morts',
             yaxis_title = '''Nombre de morts par jour''' + GetByPopSuffix(bypopulation)
         )
         
     else:
         return dict(
             title = '''Nombre de morts cummulés''' + GetByPopSuffix(bypopulation),
-            xaxis_title = '''Nombre de jours''',
+            xaxis_title = '''Nombre de jours depuis ''' + str(start) + ' cas',
             yaxis_title = '''Nombre de morts''' + GetByPopSuffix(bypopulation)
         )
 
@@ -54,13 +54,13 @@ def GetFont():
             color="MidnightBlue"
         )
 
-def GetLegend(rateInsteadOfSum, report_type="cummul", bypopulation=False):
+def GetLegend(rateInsteadOfSum, report_type="cummul", bypopulation=False, start=100):
     if report_type == "deaths":
-        return GetLegendDeath(rateInsteadOfSum, bypopulation)
+        return GetLegendDeath(rateInsteadOfSum, bypopulation, start=start)
     
-    return GetLegendCummul(rateInsteadOfSum, bypopulation)
+    return GetLegendCummul(rateInsteadOfSum, bypopulation, start=start)
 
-def plot(report, threshold=50, derivecount = 0, bypopulation=False, outputfile=None, windowsize=5, rightbound=0, text=None, lastupdate=None, report_type="cummul"):
+def plot(report, threshold=100, derivecount = 0, bypopulation=False, outputfile=None, windowsize=5, rightbound=0, text=None, lastupdate=None, report_type="cummul"):
     
     filter_windowsize = windowsize
     filter_polynomial_order = 3 if filter_windowsize > 3 else 1
@@ -114,7 +114,7 @@ def plot(report, threshold=50, derivecount = 0, bypopulation=False, outputfile=N
             '<b>Jour</b>: %{x}<br>'
         ))
 
-    leg = GetLegend(derivecount > 0, report_type=report_type, bypopulation=bypopulation) if text is None else text
+    leg = GetLegend(derivecount > 0, report_type=report_type, bypopulation=bypopulation, start=threshold) if text is None else text
 
     if lastupdate is not None:
         leg['title'] = leg['title'] + '<BR>' + str(lastupdate)
